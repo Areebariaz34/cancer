@@ -1,3 +1,22 @@
+import streamlit as st
+import os
+import gdown
+import tensorflow as tf
+
+# Drive se Model Auto-Download
+file_id = '1us9CMs0Zxg9R4UtUycL2e7yLuxL-LF-f'
+url = f'https://drive.google.com/uc?id={file_id}'
+model_path = 'model.h5'
+
+if not os.path.exists(model_path):
+    st.write("Downloading model, please wait...")
+    gdown.download(url, model_path, quiet=False)
+
+@st.cache_resource
+def load_my_model():
+    return tf.keras.models.load_model(model_path)
+
+model = load_my_model()
 import json
 import numpy as np
 import streamlit as st
